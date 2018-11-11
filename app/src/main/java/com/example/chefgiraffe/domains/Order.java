@@ -1,5 +1,6 @@
 package com.example.chefgiraffe.domains;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,20 +27,22 @@ public class Order {
         return itemDetails;
     }
 
-    public String commaSeperatedItems() {
+    public String commaSeparatedItems() {
         StringBuilder csItems = new StringBuilder();
         for (Item item : itemDetails) {
             csItems.append(item.getName());
             csItems.append(", ");
         }
-        csItems.setLength(csItems.length() - 2);
+        if (!itemDetails.isEmpty()) {
+            csItems.setLength(csItems.length() - 2);
+        }
         return csItems.toString();
     }
 
-    public double totalPrice() {
-        double total = 0.0;
+    public BigDecimal totalPrice() {
+        BigDecimal total = new BigDecimal(0.0);
         for (Item item : itemDetails) {
-            total += item.getPrice();
+            total = total.add(item.getPrice());
         }
         return total;
     }

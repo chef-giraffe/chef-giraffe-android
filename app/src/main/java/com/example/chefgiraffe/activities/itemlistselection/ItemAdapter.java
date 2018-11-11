@@ -42,7 +42,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         Item item = items.get(position);
         viewHolder.txtItemName.setText(item.getName());
         viewHolder.txtItemDescription.setText(item.getDescription());
-        viewHolder.txtItemPrice.setText("$" + Double.toString(item.getPrice()));
+        viewHolder.txtItemPrice.setText("$" + item.getPrice());
 
         return convertView;
     }

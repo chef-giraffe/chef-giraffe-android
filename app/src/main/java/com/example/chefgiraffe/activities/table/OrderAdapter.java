@@ -40,7 +40,7 @@ public class OrderAdapter extends ArrayAdapter<Order> {
             convertView.setTag(viewHolder);
         } else viewHolder = (ViewHolder) convertView.getTag();
 
-        viewHolder.vwItems.setText(orders.get(position).commaSeperatedItems());
+        viewHolder.vwItems.setText(orders.get(position).commaSeparatedItems());
 
         OrderStatus orderStatus = orders.get(position).getOrderStatus();
         viewHolder.vwStatus.setText("Status: " + orderStatus.name());
