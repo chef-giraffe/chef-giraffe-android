@@ -1,8 +1,6 @@
-package com.example.chefgiraffe.acitivities;
+package com.example.chefgiraffe.activities.itemlistselection;
 
-import androidx.lifecycle.ViewModelProviders;
-import butterknife.BindView;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,20 +9,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.chefgiraffe.BaseActivity;
-import com.example.chefgiraffe.ItemListSelectionViewModel;
-import com.example.chefgiraffe.MainActivity;
-import com.example.chefgiraffe.MainViewModel;
 import com.example.chefgiraffe.R;
-import com.example.chefgiraffe.TableActivity;
+import com.example.chefgiraffe.activities.BaseActivity;
 import com.example.chefgiraffe.domains.DataRequest;
 import com.example.chefgiraffe.domains.Item;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-import static com.example.chefgiraffe.acitivities.OrderActivity.PICK_ITEM_REQUEST;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import butterknife.BindView;
 
 public class ItemListSelectionActivity extends BaseActivity implements
         AdapterView.OnItemClickListener {
@@ -46,15 +41,19 @@ public class ItemListSelectionActivity extends BaseActivity implements
         viewModel = ViewModelProviders.of(this).get(ItemListSelectionViewModel.class);
         viewModel.loadItems();
         listView.setOnItemClickListener(this);
-        viewModel.getItems().observe(this, value -> {
-            if (value.isSuccessful()) {
-                items = value.getData();
-                List<String> names = this.getNames(value.getData());
-                ArrayAdapter<String> itemsAdapter =
-                        new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, names);
-                listView.setAdapter(itemsAdapter);
-            } else {
-                Toast.makeText(ItemListSelectionActivity.this, value.getMessage(), Toast.LENGTH_SHORT).show();
+
+        viewModel.getItems().observe(this, new Observer<DataRequest<List<Item>>>() {
+            @Override
+            public void onChanged(DataRequest<List<Item>> value) {
+                if (value.isSuccessful()) {
+                    items = value.getData();
+                    List<String> names = ItemListSelectionActivity.this.getNames(value.getData());
+                    ArrayAdapter<String> itemsAdapter =
+                            new ArrayAdapter<>(ItemListSelectionActivity.this, android.R.layout.simple_list_item_1, names);
+                    listView.setAdapter(itemsAdapter);
+                } else {
+                    Toast.makeText(ItemListSelectionActivity.this, value.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -69,9 +68,12 @@ public class ItemListSelectionActivity extends BaseActivity implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        UUID itemId = items.get(position).getId();
+        String itemId = items.get(position).getId();
+        String itemName = items.get(position).getName();
         Intent intent = new Intent();
         intent.putExtra("itemId", itemId);
-        setResult(PICK_ITEM_REQUEST, intent);
+        intent.putExtra("itemName", itemName);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 }

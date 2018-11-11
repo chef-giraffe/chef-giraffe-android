@@ -1,4 +1,4 @@
-package com.example.chefgiraffe;
+package com.example.chefgiraffe.activities.itemlistselection;
 
 import com.example.chefgiraffe.domains.DataRequest;
 import com.example.chefgiraffe.domains.Item;

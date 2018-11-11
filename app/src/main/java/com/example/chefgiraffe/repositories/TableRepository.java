@@ -10,6 +10,6 @@ public interface TableRepository {
     @GET("/tables/{tableId}")
     Call<Table> getTable(@Path("tableId") String tableId);
 
-    @GET("/tables/{tableId}/orders/preparing")
+    @GET("/tables/{tableId}/orders")
     Call<Table> getTableWithPreparingOrders(@Path("tableId") String tableId);
 }

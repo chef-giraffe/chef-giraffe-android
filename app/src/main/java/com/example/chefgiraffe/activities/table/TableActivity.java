@@ -6,6 +6,7 @@ import android.widget.ListView;
 
 import com.example.chefgiraffe.R;
 import com.example.chefgiraffe.activities.BaseActivity;
+import com.example.chefgiraffe.activities.order.OrderActivity;
 import com.example.chefgiraffe.domains.DataRequest;
 import com.example.chefgiraffe.domains.Order;
 import com.example.chefgiraffe.domains.Table;
@@ -62,7 +63,9 @@ public class TableActivity extends BaseActivity implements SwipeRefreshLayout.On
 
     @OnClick(R.id.viewPlaceOrder)
     void viewPlaceOrderClicked() {
-        // TODO: Mitch's activity
+        Intent intent = new Intent(this, OrderActivity.class);
+        intent.putExtra(TableActivity.VAR_TABLE_ID, tableId);
+        startActivity(intent);
     }
 
     private void startObservingTable(String tableId) {

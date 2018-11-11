@@ -1,36 +1,39 @@
 package com.example.chefgiraffe.domains;
 
-import java.util.UUID;
-
 public class Item {
     private String id;
-    private String itemName;
-    private String itemDescription;
-    private double itemPrice;
+    private String name;
+    private String description;
+    private double price;
     private String itemImageUrl;
 
-    public Item(String id, String itemName, String itemDescription, double itemPrice, String itemImageUrl) {
+    public Item(String id, String name, String description, double price, String itemImageUrl) {
         this.id = id;
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
-        this.itemPrice = itemPrice;
+        this.name = name;
+        this.description = description;
+        this.price = price;
         this.itemImageUrl = itemImageUrl;
+    }
+
+    public Item(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getName() {
+        return name;
     }
 
-    public String getItemDescription() {
-        return itemDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public double getItemPrice() {
-        return itemPrice;
+    public double getPrice() {
+        return price;
     }
 
     public String getItemImageUrl() {

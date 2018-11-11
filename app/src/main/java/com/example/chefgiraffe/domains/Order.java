@@ -1,11 +1,16 @@
 package com.example.chefgiraffe.domains;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
     private String id;
     private OrderStatus orderStatus;
     private List<Item> itemDetails;
+
+    public Order() {
+        itemDetails = new ArrayList<>();
+    }
 
     public Order(String id, OrderStatus orderStatus, List<Item> itemDetails) {
         this.id = id;
@@ -24,7 +29,7 @@ public class Order {
     public String commaSeperatedItems() {
         StringBuilder csItems = new StringBuilder();
         for (Item item : itemDetails) {
-            csItems.append(item.getItemName());
+            csItems.append(item.getName());
             csItems.append(", ");
         }
         csItems.setLength(csItems.length() - 2);
@@ -34,7 +39,7 @@ public class Order {
     public double totalPrice() {
         double total = 0.0;
         for (Item item : itemDetails) {
-            total += item.getItemPrice();
+            total += item.getPrice();
         }
         return total;
     }
