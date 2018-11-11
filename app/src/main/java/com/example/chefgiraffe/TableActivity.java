@@ -6,7 +6,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.chefgiraffe.domains.DataRequest;
-import com.example.chefgiraffe.domains.Order;
 import com.example.chefgiraffe.domains.Table;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -45,33 +44,22 @@ public class TableActivity extends BaseActivity {
         orderList.setAdapter(orderListAdapter);
 
         viewModel = ViewModelProviders.of(this).get(TableViewModel.class);
-        viewModel.init(tableId);
-        startObservingTable();
-        startObservingOrders();
+        startObservingTable(tableId);
     }
 
     @OnClick(R.id.viewPlaceOrder)
     void viewPlaceOrderClicked() {
-        // TODO
+        // TODO: Mitch's activity
     }
 
-    private void startObservingTable() {
-        viewModel.getTable().observe(this, new Observer<DataRequest<Table>>() {
+    private void startObservingTable(String tableId) {
+        viewModel.getTable(tableId).observe(this, new Observer<DataRequest<Table>>() {
             @Override
             public void onChanged(DataRequest<Table> value) {
                 if (value.isSuccessful()) {
                     getSupportActionBar().setTitle(value.getData().getFriendlyName());
-                }
-            }
-        });
-    }
-
-    private void startObservingOrders() {
-        viewModel.getOrders().observe(this, new Observer<DataRequest<List<Order>>>() {
-            @Override
-            public void onChanged(DataRequest<List<Order>> value) {
-                if (value.isSuccessful()) {
-
+                    orderItems.clear();
+                    orderItems.addAll(value.getData().commaSeperatedOrderItems());
                     orderListAdapter.notifyDataSetChanged();
                 }
             }

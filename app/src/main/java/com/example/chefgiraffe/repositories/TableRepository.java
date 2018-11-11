@@ -7,6 +7,9 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface TableRepository {
-    @GET("/table/{tableId}")
+    @GET("/tables/{tableId}")
     Call<Table> getTable(@Path("tableId") String tableId);
+
+    @GET("/tables/{tableId}/orders/preparing")
+    Call<Table> getTableWithPreparingOrders(@Path("tableId") String tableId);
 }
