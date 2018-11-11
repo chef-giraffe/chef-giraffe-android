@@ -1,5 +1,7 @@
 package com.example.chefgiraffe.domains;
 
+import java.util.UUID;
+
 public class Item {
     private String id;
     private String itemName;

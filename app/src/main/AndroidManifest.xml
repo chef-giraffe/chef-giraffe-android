@@ -19,6 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".acitivities.OrderActivity" />
+        <activity android:name=".acitivities.ItemListSelectionActivity" android:exported="true"/>
         <activity
             android:name=".activities.table.TableActivity"
             android:exported="true" />

@@ -6,6 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DataManager {
     private static final DataManager ourInstance = new DataManager();
     private final TableRepository tableRepository;
+    private final ItemRepository itemRepository;
     private final OrderRepository orderRepository;
 
     private DataManager() {
@@ -14,6 +15,7 @@ public class DataManager {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         tableRepository = retrofit.create(TableRepository.class);
+        itemRepository = retrofit.create(ItemRepository.class);
         orderRepository = retrofit.create(OrderRepository.class);
     }
 
@@ -23,6 +25,10 @@ public class DataManager {
 
     public TableRepository getTableRepository() {
         return tableRepository;
+    }
+
+    public ItemRepository getItemRepository() {
+        return itemRepository;
     }
 
     public OrderRepository getOrderRepository() {
