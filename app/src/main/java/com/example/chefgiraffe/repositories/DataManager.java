@@ -6,6 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DataManager {
     private static final DataManager ourInstance = new DataManager();
     private final TableRepository tableRepository;
+    private final OrderRepository orderRepository;
 
     public static DataManager getInstance() {
         return ourInstance;
@@ -13,13 +14,18 @@ public class DataManager {
 
     private DataManager() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8081")
+                .baseUrl("https://chef-giraffe.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         tableRepository = retrofit.create(TableRepository.class);
+        orderRepository = retrofit.create(OrderRepository.class);
     }
 
     public TableRepository getTableRepository() {
         return tableRepository;
+    }
+
+    public OrderRepository getOrderRepository() {
+        return orderRepository;
     }
 }

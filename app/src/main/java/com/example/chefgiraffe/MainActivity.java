@@ -12,11 +12,9 @@ import com.google.zxing.Result;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import pub.devrel.easypermissions.EasyPermissions;
 
