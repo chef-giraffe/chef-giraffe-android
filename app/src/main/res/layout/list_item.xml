@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtItemName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtItemDescription"
+        app:layout_constraintEnd_toStartOf="@+id/txtItemPrice"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Super Awesome Chicken Noodle Soup" />
+
+    <TextView
+        android:id="@+id/txtItemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="right"
+        android:textColor="@color/Money"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtItemDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toRightOf="@+id/txtItemName"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtItemName"
+        app:layout_constraintTop_toTopOf="@+id/txtItemName"
+        tools:text="$20.00" />
+
+    <TextView
+        android:id="@+id/txtItemDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/txtItemName"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtItemName"
+        app:layout_constraintTop_toBottomOf="@+id/txtItemName"
+        tools:text="test test test test test test test test test test test test " />
+</androidx.constraintlayout.widget.ConstraintLayout>

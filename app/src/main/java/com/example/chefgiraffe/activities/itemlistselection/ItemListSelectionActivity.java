@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.chefgiraffe.R;
 import com.example.chefgiraffe.activities.BaseActivity;
+import com.example.chefgiraffe.activities.table.OrderAdapter;
 import com.example.chefgiraffe.domains.DataRequest;
 import com.example.chefgiraffe.domains.Item;
 
@@ -26,6 +27,7 @@ public class ItemListSelectionActivity extends BaseActivity implements
     @BindView(R.id.listViewItems)
     ListView listView;
     List<Item> items;
+    ItemAdapter itemAdapter;
 //    List<String> items = Arrays.asList("Sandwich", "fries", "burger");
 
     private ItemListSelectionViewModel viewModel;
@@ -40,17 +42,18 @@ public class ItemListSelectionActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(ItemListSelectionViewModel.class);
         viewModel.loadItems();
+        items = new ArrayList<>();
+        itemAdapter = new ItemAdapter(this, items);
+        listView.setAdapter(itemAdapter);
         listView.setOnItemClickListener(this);
 
         viewModel.getItems().observe(this, new Observer<DataRequest<List<Item>>>() {
             @Override
             public void onChanged(DataRequest<List<Item>> value) {
                 if (value.isSuccessful()) {
-                    items = value.getData();
-                    List<String> names = ItemListSelectionActivity.this.getNames(value.getData());
-                    ArrayAdapter<String> itemsAdapter =
-                            new ArrayAdapter<>(ItemListSelectionActivity.this, android.R.layout.simple_list_item_1, names);
-                    listView.setAdapter(itemsAdapter);
+                    items.clear();
+                    items.addAll(value.getData());
+                    itemAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(ItemListSelectionActivity.this, value.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -58,13 +61,13 @@ public class ItemListSelectionActivity extends BaseActivity implements
         });
     }
 
-    private List<String> getNames(List<Item> items) {
-        List<String> names = new ArrayList<>();
-        for (Item item : items) {
-            names.add(item.getName());
-        }
-        return names;
-    }
+//    private List<String> getNames(List<Item> items) {
+//        List<String> names = new ArrayList<>();
+//        for (Item item : items) {
+//            names.add(item.getName());
+//        }
+//        return names;
+//    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
