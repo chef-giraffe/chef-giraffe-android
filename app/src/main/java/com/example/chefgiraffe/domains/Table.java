@@ -1,6 +1,5 @@
 package com.example.chefgiraffe.domains;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Table {
@@ -24,19 +23,5 @@ public class Table {
 
     public List<Order> getOrderDetails() {
         return orderDetails;
-    }
-
-    public List<String> commaSeperatedOrderItems() {
-        ArrayList<String> result = new ArrayList<>();
-        for (Order order : orderDetails) {
-            StringBuilder csItems = new StringBuilder();
-            for (Item item : order.getItemDetails()) {
-                csItems.append(item.getItemName());
-                csItems.append(", ");
-            }
-            csItems.setLength(csItems.length() - 2);
-            result.add(csItems.toString());
-        }
-        return result;
     }
 }

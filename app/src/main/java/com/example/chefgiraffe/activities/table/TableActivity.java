@@ -1,11 +1,13 @@
-package com.example.chefgiraffe;
+package com.example.chefgiraffe.activities.table;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.chefgiraffe.R;
+import com.example.chefgiraffe.activities.BaseActivity;
 import com.example.chefgiraffe.domains.DataRequest;
+import com.example.chefgiraffe.domains.Order;
 import com.example.chefgiraffe.domains.Table;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -15,18 +17,22 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class TableActivity extends BaseActivity {
+public class TableActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
     public static final String VAR_TABLE_ID = "table-id";
     @BindView(R.id.tableList)
     ListView orderList;
+    @BindView(R.id.vwRefresh)
+    SwipeRefreshLayout vwRefresh;
     @BindView(R.id.viewPlaceOrder)
     FloatingActionButton viewPlaceOrder;
-    private ArrayAdapter<String> orderListAdapter;
+    private String tableId;
+    private OrderAdapter orderListAdapter;
     private TableViewModel viewModel;
-    private List<String> orderItems;
+    private List<Order> orders;
 
     @Override
     protected int contentView() {
@@ -37,14 +43,21 @@ public class TableActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        String tableId = intent.getStringExtra(VAR_TABLE_ID);
+        tableId = intent.getStringExtra(VAR_TABLE_ID);
 
-        orderItems = new ArrayList<>();
-        orderListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, orderItems);
+        orders = new ArrayList<>();
+        orderListAdapter = new OrderAdapter(this, orders);
         orderList.setAdapter(orderListAdapter);
+
+        vwRefresh.setOnRefreshListener(this);
 
         viewModel = ViewModelProviders.of(this).get(TableViewModel.class);
         startObservingTable(tableId);
+    }
+
+    @Override
+    public void onRefresh() {
+        viewModel.refreshTable(tableId);
     }
 
     @OnClick(R.id.viewPlaceOrder)
@@ -58,9 +71,10 @@ public class TableActivity extends BaseActivity {
             public void onChanged(DataRequest<Table> value) {
                 if (value.isSuccessful()) {
                     getSupportActionBar().setTitle(value.getData().getFriendlyName());
-                    orderItems.clear();
-                    orderItems.addAll(value.getData().commaSeperatedOrderItems());
+                    orders.clear();
+                    orders.addAll(value.getData().getOrderDetails());
                     orderListAdapter.notifyDataSetChanged();
+                    vwRefresh.setRefreshing(false);
                 }
             }
         });

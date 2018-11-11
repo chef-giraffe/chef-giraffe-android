@@ -8,10 +8,6 @@ public class DataManager {
     private final TableRepository tableRepository;
     private final OrderRepository orderRepository;
 
-    public static DataManager getInstance() {
-        return ourInstance;
-    }
-
     private DataManager() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://chef-giraffe.herokuapp.com")
@@ -19,6 +15,10 @@ public class DataManager {
                 .build();
         tableRepository = retrofit.create(TableRepository.class);
         orderRepository = retrofit.create(OrderRepository.class);
+    }
+
+    public static DataManager getInstance() {
+        return ourInstance;
     }
 
     public TableRepository getTableRepository() {

@@ -1,4 +1,4 @@
-package com.example.chefgiraffe;
+package com.example.chefgiraffe.activities.table;
 
 import com.example.chefgiraffe.domains.DataRequest;
 import com.example.chefgiraffe.domains.Table;
@@ -17,12 +17,12 @@ public class TableViewModel extends ViewModel {
     public LiveData<DataRequest<Table>> getTable(String tableId) {
         if (table == null) {
             table = new MutableLiveData<>();
-            loadTableWithPreparingOrders(tableId);
+            refreshTable(tableId);
         }
         return table;
     }
 
-    private void loadTableWithPreparingOrders(String tableId) {
+    public void refreshTable(String tableId) {
         DataManager.getInstance().getTableRepository().getTableWithPreparingOrders(tableId).enqueue(new Callback<Table>() {
             @Override
             public void onResponse(Call<Table> call, Response<Table> response) {

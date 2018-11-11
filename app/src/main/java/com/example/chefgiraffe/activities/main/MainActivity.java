@@ -1,10 +1,13 @@
-package com.example.chefgiraffe;
+package com.example.chefgiraffe.activities.main;
 
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.chefgiraffe.R;
+import com.example.chefgiraffe.activities.BaseActivity;
+import com.example.chefgiraffe.activities.table.TableActivity;
 import com.example.chefgiraffe.domains.DataRequest;
 import com.example.chefgiraffe.domains.Table;
 import com.google.zxing.Result;

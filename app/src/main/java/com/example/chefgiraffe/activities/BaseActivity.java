@@ -1,4 +1,4 @@
-package com.example.chefgiraffe;
+package com.example.chefgiraffe.activities;
 
 import android.os.Bundle;
 
